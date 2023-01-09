@@ -195,7 +195,9 @@ extension Emphasis {
 extension Image {
     override func attributedString(attributes: [NSAttributedString.Key: Any], attachments: [String: NSTextAttachment]) throws -> NSAttributedString {
         guard let urlString = urlString else { return NSAttributedString() }
-        guard let attachment = attachments[urlString] else { fatalError("missing attachment for \(urlString)") }
+        guard let attachment = attachments[urlString] else {
+            return Link(urlString: urlString, title: title).attributedString(attributes: attributes, attachments: attachments)
+        }
         return NSAttributedString(attachment: attachment)
     }
 }
